@@ -10,6 +10,7 @@ contract RealEstate is ERC721URIStorage {
 
     constructor() ERC721("RealEstate", "REAL") {}
 
+    // Initialized the token id to 0 and it keeps updating every time the token is minted
     uint256 _tokenIds = 0;
 
     function mint(string memory tokenURI) public returns (uint256) {
