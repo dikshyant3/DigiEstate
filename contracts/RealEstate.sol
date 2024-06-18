@@ -5,19 +5,23 @@ pragma solidity ^0.8.19;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {ERC721URIStorage} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-contract RealState is ERC721URIStorage {
-    uint256 private _tokenIds;
+contract RealEstate is ERC721URIStorage {
+    
 
-    constructor() ERC721("RealState", "REAL") {}
+    constructor() ERC721("RealEstate", "REAL") {}
 
-    function mint(address player, string memory tokenURI)
-        public
-        returns (uint256)
-    {
-        uint256 tokenId = _nextTokenId++;
-        _mint(player, tokenId);
-        _setTokenURI(tokenId, tokenURI);
+    uint256 _tokenIds = 0;
 
-        return tokenId;
+    function mint(string memory tokenURI) public returns (uint256) {
+        _tokensIds++;
+        uint256 newId = _tokenIds.current();
+        _mint(msg.sender, newId);
+        _setTokenURI(newId, tokenURI);
+
+        return newId;
+    }
+
+    function totalSupply() public view returns (uint256) {
+        return _tokenIds.current();
     }
 }
