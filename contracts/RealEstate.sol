@@ -1,4 +1,3 @@
-// contracts/GameItem.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
@@ -10,19 +9,19 @@ contract RealEstate is ERC721URIStorage {
 
     constructor() ERC721("RealEstate", "REAL") {}
 
-    // Initialized the token id to 0 and it keeps updating every time the token is minted
-    uint256 _tokenIds = 0;
+    // a VARIABLE to keep track of token Id which starts from 0 and incremented every time with a minted token
+    uint256 private _tokenIds = 0;
 
     function mint(string memory tokenURI) public returns (uint256) {
-        _tokensIds++;
-        uint256 newId = _tokenIds.current();
-        _mint(msg.sender, newId);
-        _setTokenURI(newId, tokenURI);
+        _tokenIds++;
+        uint256 newItemId = _tokenIds;
+        _mint(msg.sender, newItemId);
+        _setTokenURI(newItemId, tokenURI);
 
-        return newId;
+        return newItemId;
     }
 
     function totalSupply() public view returns (uint256) {
-        return _tokenIds.current();
+        return _tokenIds;
     }
 }
