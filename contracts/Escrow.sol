@@ -95,4 +95,15 @@ contract RealEstateEscrow {
     function depositEscrow(uint256 _nftId) public payable onlyBuyer(_nftId){
         require(msg.value >= escrowAmount[_nftId] , "Insufficient funds for the escrow");
     }
+
+    //  function to update the inspection status by the inspector
+
+    function updateInspection(uint256 _nftId, bool _passed) public onlyInspector{
+        inspectionPassed[_nftId] = _passed;
+    }
+
+    //  function to approve the sale of the property
+    function approvePropertySale(uint256 _nftId) public{
+        approval[_nftId][msg.sender] = true;
+    }
 }
