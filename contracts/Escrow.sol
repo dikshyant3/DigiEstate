@@ -2,12 +2,8 @@
 
 pragma solidity ^0.8.19;
 
-interface IERC721{
-    function transferFrom(
-        address _from,
-        address _to,
-        uint256 _id
-    ) external;
+interface IERC721 {
+    function transferFrom(address _from, address _to, uint256 _id) external;
 }
 
 contract RealEstateEscrow {
@@ -52,7 +48,7 @@ contract RealEstateEscrow {
     // Mapping to track the inspection status of each property
     mapping(uint256 => bool) public inspectionPassed;
 
-    // Mapping to track the approval status from different parties(buyer,seller,inspector,lender) 
+    // Mapping to track the approval status from different parties(buyer,seller,inspector,lender)
     // for each property
     mapping(uint256 => mapping(address => bool)) public approval;
 
@@ -63,10 +59,10 @@ contract RealEstateEscrow {
         address payable _propertyOwner,
         address _propertyInspector,
         address _propertyLender
-    ){
+    ) {
         nftAddress = _nftContract;
         owner = _propertyOwner;
-        inspector= _propertyInspector;
+        inspector = _propertyInspector;
         lender = _propertyLender;
     }
 
@@ -77,8 +73,7 @@ contract RealEstateEscrow {
         address _buyer,
         uint256 _propertyPrice,
         uint256 _escrowAmount
-    ) public payable onlyOwner{
-
+    ) public payable onlyOwner {
         //  Transfer the NFT from owner to this contract
         IERC721(nftAddress).transferFrom(msg.sender, address(this), _nftId);
 
@@ -92,18 +87,47 @@ contract RealEstateEscrow {
 
     // Function to deposit escrow funds
 
-    function depositEscrow(uint256 _nftId) public payable onlyBuyer(_nftId){
-        require(msg.value >= escrowAmount[_nftId] , "Insufficient funds for the escrow");
+    function depositEscrow(uint256 _nftId) public payable onlyBuyer(_nftId) {
+        require(
+            msg.value >= escrowAmount[_nftId],
+            "Insufficient funds for the escrow"
+        );
     }
 
     //  function to update the inspection status by the inspector
 
-    function updateInspection(uint256 _nftId, bool _passed) public onlyInspector{
+    function updateInspection(
+        uint256 _nftId,
+        bool _passed
+    ) public onlyInspector {
         inspectionPassed[_nftId] = _passed;
     }
 
     //  function to approve the sale of the property
-    function approvePropertySale(uint256 _nftId) public{
+    function approvePropertySale(uint256 _nftId) public {
         approval[_nftId][msg.sender] = true;
     }
+
+    // function to finalize the sale of the property
+    function finalizePropertySale(uint256 _nftId) public {
+        require(inspectionPassed[_nftId], "Property inspection not passed!!!");
+        require(approval[_nftId][buyer[_nftId]], "Buyer not approved!!!");
+        require(approval[_nftId][owner], "Owner not approved!!!");
+        require(approval[_nftId][lender], "Lender not approved!!!");
+        require(
+            address(this).balance >= propertyPrice[_nftId],
+            "Insufficient balance!!!"
+        );
+
+        isPropertyListed[_nftId] = false;
+
+        // Transfer the funds to the owner
+        (bool success,) = payable(owner).call{value:address(this).balance}("");
+        require(success);
+
+        // Transfer the ownership to the buyer
+        IERC721(nftAddress).transferFrom(address(this), buyer[_nftId], _nftId);
+    }
+
+    // function to cancel the sale of the property
 }
