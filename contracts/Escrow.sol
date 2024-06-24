@@ -130,4 +130,22 @@ contract RealEstateEscrow {
     }
 
     // function to cancel the sale of the property
+    function cancelPropertySale(uint256 _nftId) public {
+        if (!inspectionPassed[_nftId]){
+            // If the inspection is not passed then refund the escrow funds to the buyer
+            payable(buyer[_nftId]).transfer(address(this).balance);
+        }
+        else {
+            // If the inspection is passed then transfer the escrow funds to the owner
+            payable(owner).transfer(address(this).balance);
+        }
+    }
+
+    // Fallback function to receive the ether if it is directly sent to the contract
+    receive() external payable{}
+
+    // function to get the current balance held by the contract
+    function getContractBalance() public view returns (uint256){
+        return address(this).balance;
+    }
 }
