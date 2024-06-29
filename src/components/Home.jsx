@@ -7,7 +7,7 @@ const Home = () => {
                 <h2>Homes for you</h2>
             </div>
             <div className="max-w-sm rounded overflow-hidden shadow-lg mt-4">
-                <img className="w-full" src={homeImage} alt="Sunset in the mountains" />
+                <img className="w-full" src={homeImage} alt="Image of a home" />
                 <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">20 ETH</div>
                     <p className="text-gray-700 text-base">
