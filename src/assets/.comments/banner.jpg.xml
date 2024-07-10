@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<comment version="3.0">
+  <caption>The city sunset</caption>
+  <note>The city sunset</note>
+  <place/>
+  <categories>
+    <category value="background"/>
+    <category value="business"/>
+    <category value="water"/>
+    <category value="house"/>
+    <category value="summer"/>
+    <category value="nature"/>
+    <category value="office"/>
+    <category value="construction"/>
+    <category value="city"/>
+    <category value="skyline"/>
+    <category value="sunset"/>
+    <category value="river"/>
+    <category value="travel"/>
+    <category value="building"/>
+    <category value="architecture"/>
+    <category value="cityscape"/>
+    <category value="view"/>
+    <category value="skyscraper"/>
+    <category value="urban"/>
+    <category value="modern"/>
+    <category value="twilight"/>
+    <category value="tower"/>
+    <category value="downtown"/>
+    <category value="beautiful"/>
+    <category value="bridge"/>
+    <category value="landmark"/>
+    <category value="town"/>
+    <category value="aerial"/>
+    <category value="china"/>
+    <category value="horizon"/>
+    <category value="cloud"/>
+    <category value="shanghai"/>
+    <category value="asia"/>
+    <category value="dusk"/>
+    <category value="scene"/>
+    <category value="chinese"/>
+    <category value="journey"/>
+    <category value="glow"/>
+    <category value="holiday"/>
+    <category value="structure"/>
+    <category value="financial"/>
+    <category value="highrise"/>
+    <category value="european"/>
+    <category value="europe"/>
+    <category value="tourist"/>
+    <category value="attraction"/>
+    <category value="historic"/>
+    <category value="medieval"/>
+    <category value="tourism"/>
+    <category value="vacation"/>
+  </categories>
+</comment>

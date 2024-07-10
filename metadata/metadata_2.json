@@ -1,0 +1,33 @@
+{
+    "name": "Luxury NYC Penthouse #2",
+    "address": "157 W 57th St APT 2B, New York, NY 10019",
+    "description": "Luxury Penthouse #2 located in the heart of NYC",
+    "image": "https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmdjqg9PnmS2UEMM5PtEEJZSELHpkbpL1ZJdpivnam3ywg/2.jpg",
+    "id": "2",
+    "attributes": [
+        {
+            "trait_type": "Purchase Price",
+            "value": 22
+        },
+        {
+            "trait_type": "Type of Residence",
+            "value": "Condo"
+        },
+        {
+            "trait_type": "Bed Rooms",
+            "value": 4
+        },
+        {
+            "trait_type": "Bathrooms",
+            "value": 2
+        },
+        {
+            "trait_type": "Square Feet",
+            "value": 2200
+        },
+        {
+            "trait_type": "Year Built",
+            "value": 2012
+        }
+    ]
+}
