@@ -1,4 +1,6 @@
-import { ethers } from "hardhat";
+import hre from 'hardhat'
+import '@nomiclabs/hardhat-ethers'
+
 
 const tokens = (n) => {
   return ethers.parseUnits(n.toString(), 'ether')
@@ -6,12 +8,12 @@ const tokens = (n) => {
 
 async function main() {
   // Setup accounts
-  const [buyer, seller, inspector, lender] = await ethers.getSigners();
+  const [buyer, seller, inspector, lender] = await hre.ethers.getSigners();
 
   // Deploy Real Estate
-  const RealEstate = await ethers.getContractFactory('RealEstate');
+  const RealEstate = await hre.ethers.getContractFactory('RealEstate');
   const realEstate = await RealEstate.deploy();
-  await realEstate.wait();
+  await realEstate.waitForDeployment();
 
   console.log(`Deployed Real Estate Contract at: ${await realEstate.getAddress()}`);
   console.log(`Minting 7 properties...\n`);
@@ -22,14 +24,14 @@ async function main() {
   }
 
   // Deploy Escrow
-  const RealEstateEscrow = await ethers.getContractFactory('RealEstateEscrow');
+  const RealEstateEscrow = await hre.ethers.getContractFactory('RealEstateEscrow');
   const escrow = await RealEstateEscrow.deploy(
     await realEstate.getAddress(),
     seller.address,
     inspector.address,
     lender.address
   );
-  await escrow.wait();
+  await escrow.waitForDeployment();
 
   console.log(`Deployed Escrow Contract at: ${await escrow.getAddress()}`);
   console.log(`Listing 7 properties...\n`);

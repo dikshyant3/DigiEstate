@@ -11,6 +11,7 @@
     "deploy": "node --experimental-json-modules --loader ts-node/esm scripts/deploy.js"
   },
   "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
