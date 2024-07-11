@@ -3,9 +3,9 @@ import { ethers } from 'ethers'
 import Navbar from "./components/Navbar"
 import Home from "./components/Home"
 import Search from './components/Search'
-import RealEstate from './artifacts/contracts/RealEstate.sol/RealEstate.json'
-import Escrow from './artifacts/contracts/Escrow.sol/RealEstate.json'
-import config from './config.json' // address json from metamask
+import RealEstate from './abis/RealEstate.json'
+import RealEstateEscrow from './abis/RealEstateEscrow.json'
+// import config from './config.json'  address json from metamask
 
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
     
     const network = await provider.getNetwork()
     
-    const realEstate = new ethers.Contract(config[network.chainId].realEstate.address, RealEstate, provider)
+    // const realEstate = new ethers.Contract(config[network.chainId].realEstate.address, RealEstate, provider)
     const totalSupply = await realEstate.totalSupply()
     const homes = []
     
@@ -34,7 +34,7 @@ function App() {
     }
     setHomes(homes)
     
-    const escrow = new ethers.Contract(config[network.chainId].escrow.address, Escrow, provider)
+    // const escrow = new ethers.Contract(config[network.chainId].escrow.address, Escrow, provider)
     setEscrow(escrow)
     
     window.ethereum.on('accountsChanged', async () => {
