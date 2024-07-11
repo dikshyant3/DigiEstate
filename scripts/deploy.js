@@ -43,25 +43,25 @@ async function main() {
   }
 
   // Listing properties...
-  let transaction = await escrow.connect(seller).list(1, buyer.address, tokens(45), tokens(25));
+  let transaction = await escrow.connect(seller).listProperty(1, buyer.address, tokens(45), tokens(25));
   await transaction.wait();
 
-  transaction = await escrow.connect(seller).list(2, buyer.address, tokens(40), tokens(22));
+  transaction = await escrow.connect(seller).listProperty(2, buyer.address, tokens(40), tokens(22));
   await transaction.wait();
 
-  transaction = await escrow.connect(seller).list(3, buyer.address, tokens(30), tokens(15));
+  transaction = await escrow.connect(seller).listProperty(3, buyer.address, tokens(30), tokens(15));
   await transaction.wait();
 
-  transaction = await escrow.connect(seller).list(4, buyer.address, tokens(35), tokens(20));
+  transaction = await escrow.connect(seller).listProperty(4, buyer.address, tokens(35), tokens(20));
   await transaction.wait();
   
-  transaction = await escrow.connect(seller).list(5, buyer.address, tokens(25), tokens(15));
+  transaction = await escrow.connect(seller).listProperty(5, buyer.address, tokens(25), tokens(15));
   await transaction.wait();
   
-  transaction = await escrow.connect(seller).list(6, buyer.address, tokens(10), tokens(5));
+  transaction = await escrow.connect(seller).listProperty(6, buyer.address, tokens(10), tokens(5));
   await transaction.wait();
   
-  transaction = await escrow.connect(seller).list(7, buyer.address, tokens(20), tokens(10));
+  transaction = await escrow.connect(seller).listProperty(7, buyer.address, tokens(20), tokens(10));
   await transaction.wait();
 
   console.log(`Finished.`);
