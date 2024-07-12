@@ -4,7 +4,7 @@ import { useState } from 'react';
 const Navbar = () => {
   //newWay
   const [errorMessage, setErrorMessage] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState(null);
+  const [defaultAccount, setDefaultAccount] = useState('');
   const [userBalance, setUserBalance] = useState(null);
   const [connButtonText, setConnButtonText] = useState('Connect Wallet');
   const connectWalletHandler = () => {
@@ -14,6 +14,7 @@ const Navbar = () => {
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
         .then((result) => {
+          console.log('Accounts:', result);
           accountChangedHandler(result[0]);
           setConnButtonText('Wallet Connected');
           getAccountBalance(result[0]);
@@ -28,11 +29,16 @@ const Navbar = () => {
   };
   // update account, will cause component re-render
   const accountChangedHandler = (newAccount) => {
+    if (Array.isArray(newAccount)) {
+      newAccount = newAccount[0];
+    }
+    console.log('Account:', newAccount);
     setDefaultAccount(newAccount);
     getAccountBalance(newAccount.toString());
   };
 
   const getAccountBalance = (account) => {
+    console.log('Account passed to getAccountBalance:', account);
     window.ethereum
       .request({ method: 'eth_getBalance', params: [account, 'latest'] })
       .then((balance) => {
@@ -65,9 +71,13 @@ const Navbar = () => {
           <a className="border-2 border-blue-700 px-2" href="#">
             Rent
           </a>
+          <div className="accountDisplay">
+            <h3>Address: {defaultAccount}</h3>
+          </div>
         </div>
         <div className="text-xl font-semibold lg:text-4xl">
           <h1>DigiEstate</h1>
+          <h3>Balance: {userBalance}</h3>
         </div>
         <div>
           <button
