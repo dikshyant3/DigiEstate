@@ -43,8 +43,8 @@ const Navbar = () => {
       .request({ method: 'eth_getBalance', params: [account, 'latest'] })
       .then((balance) => {
         console.log('Balance retrieved:', balance);
-        setUserBalance(ethers.utils.formatEther(balance));
-        const formattedBalance = ethers.utils.formatEther(balance);
+        setUserBalance(ethers.formatEther(balance));
+        const formattedBalance = ethers.formatEther(balance);
         console.log('Formatted Balance:', formattedBalance);
       })
       .catch((error) => {
@@ -79,15 +79,15 @@ const Navbar = () => {
               Address:{' '}
               {defaultAccount
                 ? defaultAccount.slice(0, 6) +
-                  '...' +
-                  defaultAccount.slice(38, 42)
+                '...' +
+                defaultAccount.slice(38, 42)
                 : ''}
             </h3>
           </div>
         </div>
         <div className="text-xl font-semibold lg:text-4xl">
           <h1>DigiEstate</h1>
-          <h3>Balance: {userBalance}</h3>
+          <h3>Balance: {userBalance ? `${parseFloat(userBalance).toFixed(4)} ETH` : '0 ETH'}</h3>
         </div>
         <div>
           <button

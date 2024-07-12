@@ -51,10 +51,10 @@ function App() {
   //   loadBlockchainData();
   // }, []);
 
-  const togglePop = (home) => {
-    setHome(home);
-    setToggle(!toggle);
-  };
+  // const togglePop = (home) => {
+  //   setHome(home);
+  //   setToggle(!toggle);
+  // };
 
   return (
     <div className="max-w-screen h-screen">
