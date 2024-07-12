@@ -4,7 +4,7 @@ import { useState } from 'react';
 const Navbar = () => {
   //newWay
   const [errorMessage, setErrorMessage] = useState(null);
-  const [defaultAccount, setDefaultAccount] = useState('');
+  const [defaultAccount, setDefaultAccount] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
   const [connButtonText, setConnButtonText] = useState('Connect Wallet');
   const connectWalletHandler = () => {
@@ -42,7 +42,10 @@ const Navbar = () => {
     window.ethereum
       .request({ method: 'eth_getBalance', params: [account, 'latest'] })
       .then((balance) => {
+        console.log('Balance retrieved:', balance);
         setUserBalance(ethers.utils.formatEther(balance));
+        const formattedBalance = ethers.utils.formatEther(balance);
+        console.log('Formatted Balance:', formattedBalance);
       })
       .catch((error) => {
         setErrorMessage(error.message);
@@ -72,7 +75,14 @@ const Navbar = () => {
             Rent
           </a>
           <div className="accountDisplay">
-            <h3>Address: {defaultAccount}</h3>
+            <h3>
+              Address:{' '}
+              {defaultAccount
+                ? defaultAccount.slice(0, 6) +
+                  '...' +
+                  defaultAccount.slice(38, 42)
+                : ''}
+            </h3>
           </div>
         </div>
         <div className="text-xl font-semibold lg:text-4xl">
