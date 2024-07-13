@@ -47,9 +47,50 @@ function App() {
   //   });
   // };
 
-  // useEffect(() => {
-  //   loadBlockchainData();
-  // }, []);
+  const loadBlockchainData = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    setProvider(provider);
+    const network = await provider.getNetwork();
+
+    const realEstate = new ethers.Contract(
+      config[network.chainId].realEstate.address,
+      RealEstate,
+      provider
+    );
+    const totalSupply = await realEstate.totalSupply();
+
+    //Check this cannot fetch the homes
+    for (var i = 0; i < totalSupply; i++) {
+      try {
+        const uri = await realEstate.tokenURI(i);
+        console.log(`Token ${i} URI:`, uri);
+
+        const response = await fetch(uri);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const metadata = await response.json();
+        console.log(`Token ${i} metadata:`, metadata);
+
+        homes.push(metadata);
+      } catch (error) {
+        console.error(`Failed to fetch or parse metadata for token ${i}:`, error);
+      }
+    }
+
+    setHomes(homes);
+    console.log("All homes:", homes);
+    const escrow = new ethers.Contract(
+      config[network.chainId].escrow.address,
+      RealEstateEscrow,
+      provider
+    );
+    setEscrow(escrow);
+  };
+  useEffect(() => {
+    loadBlockchainData();
+  }, []);
 
   const togglePop = (home) => {
     setHome(home);

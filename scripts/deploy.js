@@ -19,7 +19,7 @@ async function main() {
   console.log(`Minting 7 properties...\n`);
 
   for (let i = 0; i < 7; i++) {
-    const transaction = await realEstate.connect(seller).mint(`https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmdjqg9PnmS2UEMM5PtEEJZSELHpkbpL1ZJdpivnam3ywg/${i+1}.json`);
+    const transaction = await realEstate.connect(seller).mint(`https://amber-additional-jay-734.mypinata.cloud/ipfs/QmPMNeAuMc5hfNBcTkTMCkzcWm6ZEvNYCLsBNQFrMerxCP/${i+1}.json`);
     await transaction.wait();
   }
 
