@@ -60,7 +60,7 @@ function App() {
     const totalSupply = await realEstate.totalSupply();
 
     //Check this cannot fetch the homes
-    for (var i = 0; i < totalSupply; i++) {
+    for (var i = 1; i < totalSupply; i++) {
       try {
         const uri = await realEstate.tokenURI(i);
         const response = await fetch(uri);
