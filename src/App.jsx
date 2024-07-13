@@ -51,10 +51,42 @@ function App() {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     setProvider(provider);
     const network = await provider.getNetwork();
-    console.log(
+
+    const realEstate = new ethers.Contract(
       config[network.chainId].realEstate.address,
-      config[network.chainId].escrow.address
+      RealEstate,
+      provider
     );
+    const totalSupply = await realEstate.totalSupply();
+
+    //Check this cannot fetch the homes
+    for (var i = 0; i < totalSupply; i++) {
+      try {
+        const uri = await realEstate.tokenURI(i);
+        const response = await fetch(uri);
+
+        // Logging the response to inspect it
+        const text = await response.text();
+        console.log(`Response from ${uri}:`, text);
+
+        const metadata = JSON.parse(text); // Parsing the response text as JSON
+        homes.push(metadata);
+      } catch (error) {
+        console.error(
+          `Failed to fetch or parse metadata for token ${i}:`,
+          error
+        );
+      }
+    }
+
+    setHomes(homes);
+    console.log(homes);
+    const escrow = new ethers.Contract(
+      config[network.chainId].escrow.address,
+      RealEstateEscrow,
+      provider
+    );
+    setEscrow(escrow);
   };
   useEffect(() => {
     loadBlockchainData();
