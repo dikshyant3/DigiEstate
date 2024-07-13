@@ -3,8 +3,9 @@ import { useState } from 'react';
 
 const Navbar = () => {
   //newWay
-  const [errorMessage, setErrorMessage] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState(null);
+
+  const [errorMessage, setErrorMessage] = useState(null);
   const [userBalance, setUserBalance] = useState(null);
   const [connButtonText, setConnButtonText] = useState('Connect Wallet');
   const connectWalletHandler = () => {
@@ -75,14 +76,7 @@ const Navbar = () => {
             Rent
           </a>
           <div className="accountDisplay">
-            <h3>
-              Address:{' '}
-              {defaultAccount
-                ? defaultAccount.slice(0, 6) +
-                  '...' +
-                  defaultAccount.slice(38, 42)
-                : ''}
-            </h3>
+            <h3>Address: {defaultAccount}</h3>
           </div>
         </div>
         <div className="text-xl font-semibold lg:text-4xl">
