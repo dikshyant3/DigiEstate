@@ -54,6 +54,15 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
 
     const hasInspected = await escrow.inspectionPassed(home.id);
     setHasInspected(hasInspected);
+
+    console.log('setIsloading will now be set to false');
+    console.log(
+      'seller,lender and inspector after async await is: ',
+      seller,
+      lender,
+      inspector
+    );
+    setIsLoading(false); // Set loading to false after fetching data
   };
 
   //fetchowner is not working
@@ -110,7 +119,8 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
                   {console.log('Inspector:', inspector)}
                   {console.log('Lender:', lender)}
                   {console.log('Seller:', seller)}
-                  {console.log(account === lender)}
+                  {console.log('to string bata check')}
+                  {console.log(account.toString() === lender.toString())}
                   {account === inspector ? (
                     <button className="home__buy" disabled={hasInspected}>
                       Approve Inspection
