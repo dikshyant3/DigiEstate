@@ -76,8 +76,8 @@ function App() {
     <div className="max-w-screen h-screen">
       <Navbar />
       <Search />
-      <div className="homesSection border-2 border-red-600">
-        <h3 className="text-3xl font-bold text-gray-900 text-center mt-4 mb-2 ">
+      <div className="homesSection ">
+        <h3 className="text-3xl font-bold text-gray-900 text-center pb-3 mt-4 mb-2 ">
           Homes for you
         </h3>
         <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 justify-center border-2 px-5 py-3  border-green-500 ">
@@ -95,8 +95,11 @@ function App() {
                 <div className="p-4">
                   <h1 className="text-lg font-semibold">{home.name}</h1>
                   <p className="mt-3 text-sm text-gray-600">
-                    {home.description}
+                    <strong>{home.attributes[2].value} bds</strong> |
+                    <strong>{home.attributes[3].value} ba</strong> |
+                    <strong>{home.attributes[4].value} sqft</strong>
                   </p>
+                  <p className="mt-2 text-sm text-gray-800">{home.address}</p>
                   <button
                     type="button"
                     className="mt-4  rounded-sm bg-black px-4 py-2 text-[14px] font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
