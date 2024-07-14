@@ -70,6 +70,7 @@ function App() {
   const togglePop = (home) => {
     setHome(home);
     setToggle(!toggle);
+    // console.log(home);
   };
 
   return (
@@ -86,6 +87,7 @@ function App() {
               <div
                 className="w-[300px] rounded-md border cursor-pointer"
                 key={home.id}
+                onClick={() => togglePop(home)}
               >
                 <img
                   src={home.image}
@@ -112,7 +114,15 @@ function App() {
           ))}
         </div>
       </div>
-      <Home />
+      {toggle && (
+        <Home
+          home={home}
+          provider={provider}
+          account={account}
+          escrow={escrow}
+          togglePop={togglePop}
+        />
+      )}
     </div>
   );
 }

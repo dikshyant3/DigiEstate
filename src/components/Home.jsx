@@ -1,27 +1,55 @@
-import React from 'react';
-import homeImage from '../assets/home1.jpg';
-const Home = () => {
-    return (
-        <div className="w-full h-full bg-white flex flex-col items-center justify-start mt-4">
-            <div className="text-xl font-semibold border-b-2 border-black left-[50%]">
-                <h2>Homes for you</h2>
-            </div>
-            <div className="max-w-sm rounded overflow-hidden shadow-lg mt-4">
-                <img className="w-full" src={homeImage} alt="Image of a home" />
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">20 ETH</div>
-                    <p className="text-gray-700 text-base">
-                        2 BHK | 2200 sq.ft.
-                    </p>
-                </div>
-                <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                        157 W 57TH St. APT 498, NY
-                    </span>
-                </div>
-            </div>
+import { ethers } from 'ethers';
+import { useEffect, useState } from 'react';
+
+import close from '../assets/close.svg';
+
+const Home = ({ home, provider, account, escrow, togglePop }) => {
+  return (
+    <>
+      <div className="home">
+        <div className="home__details">
+          <div className="home__image">
+            <img src={home.image} alt="Home" />
+          </div>
+          <div className="home__overview">
+            <h1>{home.name}</h1>
+            <p>
+              <strong>{home.attributes[2].value}</strong> bds |
+              <strong>{home.attributes[3].value}</strong> ba |
+              <strong>{home.attributes[4].value}</strong> sqft
+            </p>
+            <p>{home.address}</p>
+
+            <h2 className="text-2xl">{home.attributes[0].value} ETH</h2>
+            <button className="home__buy">Buy</button>
+            <button className="home__contact">Contact agent</button>
+
+            <hr />
+
+            <h2 className="text-2xl">Overview</h2>
+
+            <p>{home.description}</p>
+
+            <hr />
+
+            <h2 className="text-2xl">Facts and features</h2>
+
+            <ul>
+              {home.attributes.map((attribute, index) => (
+                <li key={index}>
+                  <strong>{attribute.trait_type}</strong> : {attribute.value}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <button onClick={togglePop} className="home__close">
+            <img src={close} alt="Close" />
+          </button>
         </div>
-    );
-}
+      </div>
+    </>
+  );
+};
 
 export default Home;
