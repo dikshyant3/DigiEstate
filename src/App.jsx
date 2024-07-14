@@ -16,6 +16,47 @@ function App() {
   const [homes, setHomes] = useState([]);
   const [home, setHome] = useState({});
   const [toggle, setToggle] = useState(false);
+  ////////////////////////////////////////////////////////////////////
+  //connect to metamask migrated here
+
+  const [defaultAccount, setDefaultAccount] = useState(null);
+  // const [userBalance, setUserBalance] = useState(null);
+  const [connButtonText, setConnButtonText] = useState('Connect Wallet');
+  const connectWalletHandler = () => {
+    if (window.ethereum && window.ethereum.isMetaMask) {
+      console.log('MetaMask Here!');
+
+      window.ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then((result) => {
+          // console.log('Accounts:', result);
+          accountChangedHandler(result[0]);
+          setConnButtonText('Wallet Connected');
+          // getAccountBalance(result[0]);
+        });
+    } else {
+      console.log('Need to install MetaMask');
+    }
+  };
+  // update account, will cause component re-render
+  const accountChangedHandler = (newAccount) => {
+    if (Array.isArray(newAccount)) {
+      newAccount = newAccount[0];
+    }
+    setAccount(newAccount);
+    // console.log('Account:', newAccount);
+  };
+  const chainChangedHandler = () => {
+    // reload the page to avoid any errors with chain change mid use of application
+    window.location.reload();
+  };
+
+  // listen for account changes
+  window.ethereum.on('accountsChanged', accountChangedHandler);
+
+  window.ethereum.on('chainChanged', chainChangedHandler);
+
+  /////////////////////////////////////////////////////////////////////
 
   const loadBlockchainData = async () => {
     // const provider = new ethers.providers.Web3Provider(window.ethereum); // this is v5
@@ -54,8 +95,8 @@ function App() {
     }
 
     setHomes(homes);
-    console.log('This is the homes');
-    console.log(homes);
+    // console.log('This is the homes');
+    // console.log(homes);
     const escrow = new ethers.Contract(
       config[network.chainId].escrow.address,
       RealEstateEscrow,
@@ -75,7 +116,12 @@ function App() {
 
   return (
     <div className="max-w-screen h-screen">
-      <Navbar />
+      <Navbar
+        account={account}
+        connectWalletHandler={connectWalletHandler}
+        connButtonText={connButtonText}
+      />
+
       <Search />
       <div className="homesSection ">
         <h3 className="text-3xl font-bold text-gray-900 text-center pb-3 mt-4 mb-2 ">
