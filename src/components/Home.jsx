@@ -120,7 +120,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
                   {console.log('Lender:', lender)}
                   {console.log('Seller:', seller)}
                   {console.log('to string bata check')}
-                  {console.log(account.toString() === lender.toString())}
+                  {console.log(account.toLowerCase() === lender.toLowerCase())}
                   {account === inspector ? (
                     <button className="home__buy" disabled={hasInspected}>
                       Approve Inspection

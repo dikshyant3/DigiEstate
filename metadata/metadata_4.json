@@ -1,33 +1,33 @@
 {
-    "name": "Luxury NYC Penthouse #4",
-    "address": "157 W 57th St APT 4B, New York, NY 10019",
-    "description": "Luxury Penthouse #4 located in the heart of NYC",
-    "image": "https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmdjqg9PnmS2UEMM5PtEEJZSELHpkbpL1ZJdpivnam3ywg/4.jpg",
+    "name": "Cozy Cottage in Pokhara",
+    "address": "456 Lakeside Rd, Pokhara, Nepal",
+    "description": "Charming cottage near the lake, perfect for a peaceful getaway surrounded by nature.",
+    "image": "https://amber-additional-jay-734.mypinata.cloud/ipfs/QmXK6tegJtnJSqkNHS3LBpaEyBy9NTfBSsFoXRerQGY8Ax/4.jpg",
     "id": "4",
     "attributes": [
-        {
-            "trait_type": "Purchase Price",
-            "value": 24
-        },
-        {
-            "trait_type": "Type of Residence",
-            "value": "Condo"
-        },
-        {
-            "trait_type": "Bed Rooms",
-            "value": 3
-        },
-        {
-            "trait_type": "Bathrooms",
-            "value": 2
-        },
-        {
-            "trait_type": "Square Feet",
-            "value": 2400
-        },
-        {
-            "trait_type": "Year Built",
-            "value": 2014
-        }
+      {
+        "trait_type": "Purchase Price",
+        "value": 150
+      },
+      {
+        "trait_type": "Type of Residence",
+        "value": "Cottage"
+      },
+      {
+        "trait_type": "Bed Rooms",
+        "value": 2
+      },
+      {
+        "trait_type": "Bathrooms",
+        "value": 1
+      },
+      {
+        "trait_type": "Square Feet",
+        "value": 800
+      },
+      {
+        "trait_type": "Year Built",
+        "value": 2010
+      }
     ]
-}
+  }

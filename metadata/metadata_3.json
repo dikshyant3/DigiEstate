@@ -1,33 +1,33 @@
 {
-    "name": "Luxury NYC Penthouse #3",
-    "address": "157 W 57th St APT 3B, New York, NY 10019",
-    "description": "Luxury Penthouse #3 located in the heart of NYC",
-    "image": "https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmdjqg9PnmS2UEMM5PtEEJZSELHpkbpL1ZJdpivnam3ywg/3.jpg",
+    "name": "Luxury Apartment in Mumbai",
+    "address": "789 Marine Drive, Mumbai, India",
+    "description": "Lavish apartment with sea views, featuring modern amenities and spacious living.",
+    "image": "https://amber-additional-jay-734.mypinata.cloud/ipfs/QmXK6tegJtnJSqkNHS3LBpaEyBy9NTfBSsFoXRerQGY8Ax/3.jpg",
     "id": "3",
     "attributes": [
-        {
-            "trait_type": "Purchase Price",
-            "value": 23
-        },
-        {
-            "trait_type": "Type of Residence",
-            "value": "Condo"
-        },
-        {
-            "trait_type": "Bed Rooms",
-            "value": 2
-        },
-        {
-            "trait_type": "Bathrooms",
-            "value": 3
-        },
-        {
-            "trait_type": "Square Feet",
-            "value": 2300
-        },
-        {
-            "trait_type": "Year Built",
-            "value": 2013
-        }
+      {
+        "trait_type": "Purchase Price",
+        "value": 1.2
+      },
+      {
+        "trait_type": "Type of Residence",
+        "value": "Apartment"
+      },
+      {
+        "trait_type": "Bed Rooms",
+        "value": 4
+      },
+      {
+        "trait_type": "Bathrooms",
+        "value": 3
+      },
+      {
+        "trait_type": "Square Feet",
+        "value": 2500
+      },
+      {
+        "trait_type": "Year Built",
+        "value": 2020
+      }
     ]
-}
+  }

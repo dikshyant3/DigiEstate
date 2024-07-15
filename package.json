@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy": "node --experimental-json-modules --loader ts-node/esm scripts/deploy.js"
+    "deploy": "hardhat run scripts/deploy.js --network localhost"
   },
   "dependencies": {
     "@nomiclabs/hardhat-ethers": "^2.2.3",
