@@ -30,7 +30,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
 
     // -- Seller
 
-    const seller = await escrow.owner(); // becuase in our esscrow  there is owner inplace of seller variable
+    const seller = await escrow.seller(); // becuase in our esscrow  owner changed to seller
     setSeller(seller);
     console.log('from fetch details, the seller is', seller);
 
@@ -198,14 +198,6 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
                   {console.log('Lender:', lender)}
                   {console.log('Seller:', seller)}
                   {console.log('to string bata check')}
-<<<<<<< HEAD
-                  {console.log(account.toLowerCase() === lender.toLowerCase())}
-                  {account === inspector ? (
-                    <button className="home__buy" disabled={hasInspected}>
-=======
-                  {console.log('type checking')}
-                  {console.log(typeof account)}
-                  {console.log(typeof lender)}
                   {console.log(account.toLowerCase() === lender.toLowerCase())} */}
                   {account.toLowerCase() === inspector.toLowerCase() ? (
                     <button
@@ -213,7 +205,6 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
                       onClick={inspectHandler}
                       disabled={hasInspected}
                     >
->>>>>>> subash-repo/homesTest
                       Approve Inspection
                     </button>
                   ) : account.toLowerCase() === lender.toLowerCase() ? (
