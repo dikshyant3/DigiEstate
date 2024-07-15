@@ -1,5 +1,5 @@
-import { expect } from 'chai';
-import { ethers } from 'hardhat';
+import { expect } from "chai";
+import { ethers } from "hardhat";
 
 const tokens = (n) => {
     return ethers.parseUnits(n.toString(), 'ether');
@@ -18,7 +18,7 @@ describe('Escrow', function() {
         realEstate = await RealEstate.deploy();
 
         // Mint 
-        let transaction = await realEstate.connect(seller).mint("https://ipfs.io/ipfs/QmTudSYeM7mz3PkYEWXWqPjomRPHogcMFSq7XAvsvsgAPS");
+        let transaction = await realEstate.connect(seller).mint("https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmb9mgbuQT1oUcCGAnpKJrPAF5XGygfY2ivKsn5JQYNLvF/metadata_1.json");
         await transaction.wait();
 
         // Deploy Escrow
