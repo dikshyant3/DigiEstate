@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.19;
 
 interface IERC721 {
     function transferFrom(address _from, address _to, uint256 _id) external;
@@ -8,7 +8,7 @@ interface IERC721 {
 
 contract RealEstateEscrow {
     address public nftAddress;
-    address payable public owner;
+    address payable public seller;
     address public inspector;
     address public lender;
 
@@ -20,8 +20,8 @@ contract RealEstateEscrow {
         _;
     }
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only seller can call this method!!!");
+    modifier onlySeller() {
+        require(msg.sender == seller, "Only seller can call this method!!!");
         _;
     }
 
@@ -61,7 +61,7 @@ contract RealEstateEscrow {
         address _propertyLender
     ) {
         nftAddress = _nftContract;
-        owner = _propertyOwner;
+        seller = _propertyOwner;
         inspector = _propertyInspector;
         lender = _propertyLender;
     }
@@ -73,7 +73,7 @@ contract RealEstateEscrow {
         address _buyer,
         uint256 _propertyPrice,
         uint256 _escrowAmount
-    ) public payable onlyOwner {
+    ) public payable onlySeller {
         //  Transfer the NFT from owner to this contract
         IERC721(nftAddress).transferFrom(msg.sender, address(this), _nftId);
 
@@ -112,7 +112,7 @@ contract RealEstateEscrow {
     function finalizePropertySale(uint256 _nftId) public {
         require(inspectionPassed[_nftId], "Property inspection not passed!!!");
         require(approval[_nftId][buyer[_nftId]], "Buyer not approved!!!");
-        require(approval[_nftId][owner], "Owner not approved!!!");
+        require(approval[_nftId][seller], "Seller not approved!!!");
         require(approval[_nftId][lender], "Lender not approved!!!");
         require(
             address(this).balance >= propertyPrice[_nftId],
@@ -122,7 +122,7 @@ contract RealEstateEscrow {
         isPropertyListed[_nftId] = false;
 
         // Transfer the funds to the owner
-        (bool success,) = payable(owner).call{value:address(this).balance}("");
+        (bool success,) = payable(seller).call{value:address(this).balance}("");
         require(success);
 
         // Transfer the ownership to the buyer
@@ -137,7 +137,7 @@ contract RealEstateEscrow {
         }
         else {
             // If the inspection is passed then transfer the escrow funds to the owner
-            payable(owner).transfer(address(this).balance);
+            payable(seller).transfer(address(this).balance);
         }
     }
 

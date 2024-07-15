@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import hre from 'hardhat'
+import '@nomiclabs/hardhat-ethers'
 
 const tokens = (n) => {
     return ethers.parseUnits(n.toString(), 'ether');
@@ -11,10 +12,10 @@ describe('Escrow', function() {
 
     beforeEach(async () => {
         // Setup accounts
-        [buyer, seller, inspector, lender] = await ethers.getSigners();
+        [buyer, seller, inspector, lender] = await hre.ethers.getSigners();
 
         // Deploy Real Estate
-        const RealEstate = await ethers.getContractFactory('RealEstate');
+        const RealEstate = await hre.ethers.getContractFactory('RealEstate');
         realEstate = await RealEstate.deploy();
 
         // Mint 
@@ -22,7 +23,7 @@ describe('Escrow', function() {
         await transaction.wait();
 
         // Deploy Escrow
-        const Escrow = await ethers.getContractFactory('Escrow');
+        const Escrow = await hre.ethers.getContractFactory('RealEstateEscrow');
         escrow = await Escrow.deploy(
             realEstate.target,
             seller.address,
@@ -35,7 +36,7 @@ describe('Escrow', function() {
         await transaction.wait();
 
         // List Property
-        transaction = await escrow.connect(seller).list(1, buyer.address, tokens(10), tokens(5));
+        transaction = await escrow.connect(seller).listProperty(1, buyer.address, tokens(10), tokens(5));
         await transaction.wait();
     });
 
@@ -63,7 +64,7 @@ describe('Escrow', function() {
 
     describe('Listing', () => {
         it('Updates as listed', async () => {
-            const result = await escrow.isListed(1);
+            const result = await escrow.isPropertyListed(1);
             expect(result).to.equal(true);
         });
 
@@ -73,7 +74,7 @@ describe('Escrow', function() {
         });
 
         it('Returns purchase price', async () => {
-            const result = await escrow.purchasePrice(1);
+            const result = await escrow.propertyPrice(1);
             expect(result).to.equal(tokens(10));
         });
 
@@ -89,7 +90,7 @@ describe('Escrow', function() {
 
     describe('Deposits', () => {
         beforeEach(async () => {
-            const transaction = await escrow.connect(buyer).depositEarnest(1, { value: tokens(5) });
+            const transaction = await escrow.connect(buyer).depositEscrow(1, { value: tokens(5) });
             await transaction.wait();
         });
 
@@ -101,7 +102,7 @@ describe('Escrow', function() {
 
     describe('Inspection', () => {
         beforeEach(async () => {
-            const transaction = await escrow.connect(inspector).updateInspectionStatus(1, true);
+            const transaction = await escrow.connect(inspector).updateInspection(1, true);
             await transaction.wait();
         });
 
@@ -113,13 +114,13 @@ describe('Escrow', function() {
 
     describe('Approval', () => {
         beforeEach(async () => {
-            let transaction = await escrow.connect(buyer).approveSale(1);
+            let transaction = await escrow.connect(buyer).approvePropertySale(1);
             await transaction.wait();
 
-            transaction = await escrow.connect(seller).approveSale(1);
+            transaction = await escrow.connect(seller).approvePropertySale(1);
             await transaction.wait();
 
-            transaction = await escrow.connect(lender).approveSale(1);
+            transaction = await escrow.connect(lender).approvePropertySale(1);
             await transaction.wait();
         });
 
@@ -132,24 +133,24 @@ describe('Escrow', function() {
 
     describe('Sale', () => {
         beforeEach(async () => {
-            let transaction = await escrow.connect(buyer).depositEarnest(1, { value: tokens(5) });
+            let transaction = await escrow.connect(buyer).depositEscrow(1, { value: tokens(5) });
             await transaction.wait();
 
-            transaction = await escrow.connect(inspector).updateInspectionStatus(1, true);
+            transaction = await escrow.connect(inspector).updateInspection(1, true);
             await transaction.wait();
 
-            transaction = await escrow.connect(buyer).approveSale(1);
+            transaction = await escrow.connect(buyer).approvePropertySale(1);
             await transaction.wait();
 
-            transaction = await escrow.connect(seller).approveSale(1);
+            transaction = await escrow.connect(seller).approvePropertySale(1);
             await transaction.wait();
 
-            transaction = await escrow.connect(lender).approveSale(1);
+            transaction = await escrow.connect(lender).approvePropertySale(1);
             await transaction.wait();
 
             await lender.sendTransaction({ to: escrow.target, value: tokens(5) });
 
-            transaction = await escrow.connect(seller).finalizeSale(1);
+            transaction = await escrow.connect(seller).finalizePropertySale(1);
             await transaction.wait();
         });
 
