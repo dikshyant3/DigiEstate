@@ -27,7 +27,9 @@ The DApp operates with two primary contracts:
 
 All the metadata of the NFT are hosted in pinata which can be accessed by using the below link. 
 
-```https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmb9mgbuQT1oUcCGAnpKJrPAF5XGygfY2ivKsn5JQYNLvF/metadata_${i+1}.json```
+```bash
+https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmb9mgbuQT1oUcCGAnpKJrPAF5XGygfY2ivKsn5JQYNLvF/
+```
 
 
 
