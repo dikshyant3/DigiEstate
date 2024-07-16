@@ -1,27 +1,42 @@
 
 # DigiEstate: A Web 3.0 Solution for Real Estate Marketplaces
 
-DigiEstate is a Web 3.0 real estate application that uses blockchain technology to make property transactions safer and more efficient. Users are able to easily navigate the website. The application's front end will interface with a smart contract that uses individual NFTs (Non-Fungible Tokens) to represent real estate properties. Each property listed in the website is tokenized as NFT which contains its unique details and metadata.
+DigiEstate is a Web 3.0 real estate application that uses blockchain technology to make property transactions safer and more efficient. Users are able to easily navigate the website. The application's front end will interface with a smart contract that uses individual NFTs (Non-Fungible Tokens) to represent real estate properties allowing users to navigate with ease.
 
-The seller lists the property and the buyer makes payment through an escrow mechanism during the transaction process. The "Buy" button on a property's NFT can be clicked by a user to make a purchase. There are some other parties such as Lenders, inspectors, and appraisers who need to approve the deal. After the approval by all parties, the buyer acquires ownership of the property and the seller is paid.
+## Features
 
-There is a group of NFTs controlling all the real estate properties on the blockchain side. To maintain decentralization and security, metadata—such as price, area, number of bedrooms, etc.—is saved on the IPFS (InterPlanetary File System). This system is controlled by two smart contracts: "RealState," which handles property listings and data, and another "RealEstateEscrow" contract that handles transactions and acquisitions. This decentralized program (DApp) offers a transparent, secure and efficient way to handle real estate transactions.
+- **NFT Tokenization** : Each property is tokenized as NFT which contains its unique details and metadata.
+- **Secure Transactions** : An Escrow mechanism ensures secure payment process.
+- **Multi-party Approval** : Lenders, inspector, and appraisers are the ones involved with transaction approval.
+- **Decentralized Architecture** : The metadata also, is kept on the IPFS so as to exercising the feature of security along with decentralization.
 
-# How does it Work?
+ This system is controlled by two smart contracts: "RealState," which handles property listings and data, and another "RealEstateEscrow" contract that handles transactions and acquisitions. This decentralized program (DApp) offers a transparent, secure and efficient way to handle real estate transactions.
+
+## How It Works?
 
 
+## Architecture Overview
 
-# IPFS
+The DApp operates with two primary contracts:
+
+- RealEstate: Responsible for minting tokens to represent the real estate properties, assigning unique URIs to each token and maintaining the track of total amount of tokens issued.
+- RealEstateEscrow: controls the entire flow of real estate NFTs’ sales, from listing to determining the escrow deposits, inspections, approvals of all the parties involved, closing of properties, cancellations, and, finally distribution of funds.
+
+  
+## IPFS Integration
 
 All the metadata of the NFT are hosted in pinata which can be accessed by using the below link. 
 
-https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmb9mgbuQT1oUcCGAnpKJrPAF5XGygfY2ivKsn5JQYNLvF/metadata_${i+1}.json
+```https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmb9mgbuQT1oUcCGAnpKJrPAF5XGygfY2ivKsn5JQYNLvF/metadata_${i+1}.json```
 
 
 
 ## Setup and Development Commands:
 
-1. yarn hardhat compile
+1. **Compile Contracts**:
+   ```bash
+    yarn hardhat compile
+    ```
     
     - It compiles all Solidity (.sol) files in the project, converting them into Ethereum Virtual Machine (EVM) bytecode.
     
@@ -30,20 +45,34 @@ https://amber-additional-jay-734.mypinata.cloud/ipfs/Qmb9mgbuQT1oUcCGAnpKJrPAF5X
     - Furthermore, it verifies the Solidity contract and checks for the compilation error and stored the compiled output in the artifacts folder.
 
 
-2. yarn hardhat node
+2. **Start Local Network**:
+   ```bash
+    yarn hardhat node
+    ```
+   
+   - This command initializes a local Ethereum network using Hardhat,    allowing us to test our smart contracts in a controlled environment. It creates a set of accounts for testing and logs transactions.
 
-    This command initializes a local Ethereum network using Hardhat,    allowing us to test our smart contracts in a controlled environment. It creates a set of accounts for testing and logs transactions.
+3. **Deploy Contracts**:
+    ```bash
+    yarn deploy
+    ```
 
-3. yarn deploy
+    - This command compiles and deploys our smart contracts to the local Hardhat network. It sets up the initial state of the contracts, making them ready for interaction.
 
-    This command compiles and deploys our smart contracts to the local Hardhat network. It sets up the initial state of the contracts, making them ready for interaction.
+4. **Run Tests**:
+    ```bash
+    yarn hardhat test
+    ```
 
-4. yarn hardhat test
-    This command executes the test suite for our smart contracts, ensuring that all functionalities work as intended. It verifies the integrity and reliability of the smart contracts before deployment to the main network.
+   - This command executes the test suite for our smart contracts, ensuring that all functionalities work as intended. It verifies the integrity and reliability of the smart contracts before deployment to the main network.
 
-5. yarn dev
+5. **Start Development Server**:
+    ```bash
+    yarn dev
+    ```
 
     This command is used for starting the development server.
+
 
 
 
