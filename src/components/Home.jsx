@@ -23,16 +23,16 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
 
     const buyer = await escrow.buyer(home.id);
     setBuyer(buyer);
-    console.log('from fetch details, the buyer is', buyer);
+    // console.log('from fetch details, the buyer is', buyer);
 
     const hasBought = await escrow.approval(home.id, buyer);
     setHasBought(hasBought);
 
     // -- Seller
 
-    const seller = await escrow.owner(); // becuase in our esscrow  there is owner inplace of seller variable
+    const seller = await escrow.seller(); // becuase in our esscrow  owner changed to seller
     setSeller(seller);
-    console.log('from fetch details, the seller is', seller);
+    // console.log('from fetch details, the seller is', seller);
 
     const hasSold = await escrow.approval(home.id, seller);
     setHasSold(hasSold);
@@ -41,7 +41,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
 
     const lender = await escrow.lender();
     setLender(lender);
-    console.log('from fetch details, the lender is', lender);
+    // console.log('from fetch details, the lender is', lender);
 
     const hasLended = await escrow.approval(home.id, lender);
     setHasLended(hasLended);
@@ -50,19 +50,19 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
 
     const inspector = await escrow.inspector();
     setInspector(inspector);
-    console.log('from fetch details, the inspector is', inspector);
+    // console.log('from fetch details, the inspector is', inspector);
 
     const hasInspected = await escrow.inspectionPassed(home.id);
     setHasInspected(hasInspected);
 
-    console.log('setIsloading will now be set to false');
-    console.log(
-      'seller,lender and inspector after async await is: ',
-      seller,
-      lender,
-      inspector
-    );
-    setIsLoading(false); // Set loading to false after fetching data
+    // console.log('setIsloading will now be set to false');
+    // console.log(
+    //   'seller,lender and inspector after async await is: ',
+    //   seller,
+    //   lender,
+    //   inspector
+    // );
+    // setIsLoading(false); // Set loading to false after fetching data
   };
 
   //fetchowner is not working
@@ -73,10 +73,97 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
     console.log('from fetch owner', owner);
     setOwner(owner);
   };
+
+  const buyHandler = async () => {
+    const escrowAmount = await escrow.escrowAmount(home.id);
+    console.log('THe home id is', home.id);
+    console.log('the esscrowAmount is', escrowAmount);
+    const signer = await provider.getSigner();
+
+    // Buyer deposit earnest
+    let transaction = await escrow
+      .connect(signer)
+      .depositEscrow(home.id, { value: escrowAmount });
+    console.log('the transaction in buyHandler is', transaction);
+    await transaction.wait();
+
+    // Buyer approves...
+    transaction = await escrow.connect(signer).approvePropertySale(home.id);
+    await transaction.wait();
+
+    setHasBought(true);
+  };
+
+  const inspectHandler = async () => {
+    const signer = await provider.getSigner();
+
+    // Inspector updates status
+    const transaction = await escrow
+      .connect(signer)
+      .updateInspection(home.id, true);
+    await transaction.wait();
+
+    setHasInspected(true);
+  };
+
+  const lendHandler = async () => {
+    const signer = await provider.getSigner();
+    console.log('Escrow address:', escrow.getAddress());
+
+    // Lender approves...
+    const transaction = await escrow
+      .connect(signer)
+      .approvePropertySale(home.id);
+    await transaction.wait();
+
+    // Lender sends funds to contract...
+    const lendAmount =
+      (await escrow.propertyPrice(home.id)) -
+      (await escrow.escrowAmount(home.id));
+    await signer.sendTransaction({
+      to: escrow.getAddress(),
+      value: lendAmount.toString(),
+      gasLimit: 60000,
+    });
+    console.log(' lended has been successfull. Now has Lended is true');
+    setHasLended(true);
+  };
+
+  const sellHandler = async () => {
+    console.log('sell handler has been set to true');
+    const signer = await provider.getSigner();
+
+    // Seller approves...
+    let transaction = await escrow.connect(signer).approvePropertySale(home.id);
+    await transaction.wait();
+    console.log('Seller has approved property sale');
+
+    // Seller finalize...
+    transaction = await escrow.connect(signer).finalizePropertySale(home.id);
+    await transaction.wait();
+    console.log(
+      'Seller has finalized property sale/ Now has sold will be set to true'
+    );
+
+    setHasSold(true);
+  };
+
   useEffect(() => {
     fetchDetails();
     fetchOwner();
   }, [hasSold]);
+  useEffect(() => {
+    if (buyer && lender && inspector && seller) {
+      setIsLoading(false); // Set loading to false if all values are set
+      console.log('setIsloading will now be set to false');
+      console.log(
+        'seller,lender and inspector after use Effect is: ',
+        seller,
+        lender,
+        inspector
+      );
+    }
+  }, [buyer, lender, inspector, seller]);
 
   return (
     <>
@@ -114,27 +201,43 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
                 </div>
               ) : (
                 <div>
-                  {console.log('Inside ternary operators')}
+                  {/* {console.log('Inside ternary operators')}
                   {console.log('Selected account:', account)}
                   {console.log('Inspector:', inspector)}
                   {console.log('Lender:', lender)}
                   {console.log('Seller:', seller)}
                   {console.log('to string bata check')}
-                  {console.log(account.toLowerCase() === lender.toLowerCase())}
-                  {account === inspector ? (
-                    <button className="home__buy" disabled={hasInspected}>
+                  {console.log(account.toLowerCase() === lender.toLowerCase())} */}
+                  {account.toLowerCase() === inspector.toLowerCase() ? (
+                    <button
+                      className="home__buy"
+                      onClick={inspectHandler}
+                      disabled={hasInspected}
+                    >
                       Approve Inspection
                     </button>
-                  ) : account == lender ? (
-                    <button className="home__buy" disabled={hasLended}>
+                  ) : account.toLowerCase() === lender.toLowerCase() ? (
+                    <button
+                      className="home__buy"
+                      onClick={lendHandler}
+                      disabled={hasLended}
+                    >
                       Approve & Lend
                     </button>
-                  ) : account === seller ? (
-                    <button className="home__buy" disabled={hasSold}>
+                  ) : account.toLowerCase() === seller.toLowerCase() ? (
+                    <button
+                      className="home__buy"
+                      onClick={sellHandler}
+                      disabled={hasSold}
+                    >
                       Approve & Sell
                     </button>
                   ) : (
-                    <button className="home__buy" disabled={hasBought}>
+                    <button
+                      className="home__buy"
+                      onClick={buyHandler}
+                      disabled={hasBought}
+                    >
                       Buy
                     </button>
                   )}
