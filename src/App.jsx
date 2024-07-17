@@ -8,6 +8,7 @@ import Search from './components/Search';
 import RealEstate from './abis/RealEstate.json';
 import RealEstateEscrow from './abis/RealEstateEscrow.json';
 import config from './config.json'; //address json from metamask
+import Footer from './components/Footer';
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -167,6 +168,7 @@ function App() {
           togglePop={togglePop}
         />
       )}
+      <Footer />
     </div>
   );
 }
