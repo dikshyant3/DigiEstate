@@ -3,37 +3,48 @@ import { useState } from 'react';
 
 const Navbar = ({ account, connectWalletHandler, connButtonText }) => {
   return (
-    <nav className="w-full h-20 flex flex-col items-center justify-between border-2 border-red-500 bg-white text-black z-10">
-      <div className="w-full flex justify-between items-center h-16 bg-white text-xl px-4 md:text-2xl">
-        <div className="flex space-x-4 gap-2 border-2 border-green-800">
-          <a className="border-2 border-blue-700 px-2" href="#">
-            Buy
-          </a>
-          <a className="border-2 border-blue-700 px-2" href="#">
-            Sell
-          </a>
-          <a className="border-2 border-blue-700 px-2" href="#">
-            Rent
-          </a>
-          <div className="accountDisplay">
-            Address:{' '}
-            {account ? account.slice(0, 6) + '...' + account.slice(38, 42) : ''}
-          </div>
-        </div>
-        <div className="text-xl font-semibold lg:text-4xl">
-          <h1>DigiEstate </h1>
-        </div>
-        <div>
-          <button
-            onClick={connectWalletHandler}
-            type="button"
-            className="bg-blue-700 text-white text-lg md:text-2xl px-4 py-2 border-none rounded-md ring-0 hover:bg-blue-500"
+    <div className="flex items-center px-5 sm:px-10 py-8 sm:py-10 justify-between   ">
+      <nav className="flex items-center gap-3 sm:gap-5">
+        <a
+          href="#"
+          className="inline-flex items-center gap-2 text-sm font-medium sm:text-lg md:text-xl md:font-extrabold  text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Buy
+        </a>
+        <a
+          href="#"
+          className="inline-flex items-center gap-2 text-sm font-medium sm:text-lg md:text-xl md:font-extrabold text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Sell
+        </a>
+        <a
+          href="#"
+          className="inline-flex items-center gap-2 text-sm font-medium sm:text-lg md:text-xl md:font-extrabold text-muted-foreground transition-colors hover:text-foreground"
+        >
+          Rent
+        </a>
+      </nav>
+      <div className="flex-1 text-center">
+        <h1 className="font-maamli">
+          <a
+            href="#"
+            className="text-2xl md:text-4xl  font-bold   tracking-wider "
           >
-            {connButtonText}
-          </button>
-        </div>
+            DigiEstate
+          </a>
+        </h1>
       </div>
-    </nav>
+      <button
+        onClick={connectWalletHandler}
+        type="button"
+        className="bg-[#292524] text-white text-lg md:text-2xl px-4 py-2 border-none rounded-md ring-0 hover:bg-[#57534e]"
+      >
+        {connButtonText}
+        {account
+          ? ' (' + account.slice(0, 2) + '...' + account.slice(40, 42) + ') '
+          : ''}
+      </button>
+    </div>
   );
 };
 

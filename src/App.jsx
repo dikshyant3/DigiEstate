@@ -19,12 +19,10 @@ function App() {
   ////////////////////////////////////////////////////////////////////
   //connect to metamask migrated here
 
-  const [defaultAccount, setDefaultAccount] = useState(null);
-  // const [userBalance, setUserBalance] = useState(null);
   const [connButtonText, setConnButtonText] = useState('Connect Wallet');
   const connectWalletHandler = () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
-      console.log('MetaMask Here!');
+      // console.log('MetaMask Here!');
 
       window.ethereum
         .request({ method: 'eth_requestAccounts' })
@@ -35,7 +33,7 @@ function App() {
           // getAccountBalance(result[0]);
         });
     } else {
-      console.log('Need to install MetaMask');
+      alert('Need to install MetaMask');
     }
   };
   // update account, will cause component re-render
@@ -123,15 +121,15 @@ function App() {
       />
 
       <Search />
-      <div className="homesSection ">
-        <h3 className="text-3xl font-bold text-gray-900 text-center pb-3 mt-4 mb-2 ">
-          Homes for you
+      <div className="homesSection mt-12 sm:mt-16 md:mt-20 ">
+        <h3 className="text-3xl md:text-5xl font-bold text-gray-900 text-center pb-3 mt-4 mb-2 ">
+          Homes For You
         </h3>
-        <div className=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 justify-center border-2 px-5 py-3  border-green-500 ">
+        <div className=" grid grid-cols-1 ml-6 sm:ml-10 md:ml-16 sm:grid-cols-2 md:grid-cols-3 gap-5 justify-center  px-5 py-3   ">
           {homes.map((home) => (
             <>
               <div
-                className="w-[300px] rounded-md border cursor-pointer"
+                className="w-[300px] rounded-md border cursor-pointer shadow-lg "
                 key={home.id}
                 onClick={() => togglePop(home)}
               >
