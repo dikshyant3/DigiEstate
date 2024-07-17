@@ -70,21 +70,19 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
     if (await escrow.isPropertyListed(home.id)) return;
 
     const owner = await escrow.buyer(home.id);
-    console.log('from fetch owner', owner);
+    // console.log('from fetch owner', owner);
     setOwner(owner);
   };
 
   const buyHandler = async () => {
     const escrowAmount = await escrow.escrowAmount(home.id);
-    console.log('THe home id is', home.id);
-    console.log('the esscrowAmount is', escrowAmount);
     const signer = await provider.getSigner();
 
     // Buyer deposit earnest
     let transaction = await escrow
       .connect(signer)
       .depositEscrow(home.id, { value: escrowAmount });
-    console.log('the transaction in buyHandler is', transaction);
+
     await transaction.wait();
 
     // Buyer approves...
@@ -108,7 +106,7 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
 
   const lendHandler = async () => {
     const signer = await provider.getSigner();
-    console.log('Escrow address:', escrow.getAddress());
+    // console.log('Escrow address:', escrow.getAddress());
 
     // Lender approves...
     const transaction = await escrow
@@ -125,25 +123,20 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
       value: lendAmount.toString(),
       gasLimit: 60000,
     });
-    console.log(' lended has been successfull. Now has Lended is true');
+
     setHasLended(true);
   };
 
   const sellHandler = async () => {
-    console.log('sell handler has been set to true');
     const signer = await provider.getSigner();
 
     // Seller approves...
     let transaction = await escrow.connect(signer).approvePropertySale(home.id);
     await transaction.wait();
-    console.log('Seller has approved property sale');
 
     // Seller finalize...
     transaction = await escrow.connect(signer).finalizePropertySale(home.id);
     await transaction.wait();
-    console.log(
-      'Seller has finalized property sale/ Now has sold will be set to true'
-    );
 
     setHasSold(true);
   };
@@ -155,13 +148,6 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
   useEffect(() => {
     if (buyer && lender && inspector && seller) {
       setIsLoading(false); // Set loading to false if all values are set
-      console.log('setIsloading will now be set to false');
-      console.log(
-        'seller,lender and inspector after use Effect is: ',
-        seller,
-        lender,
-        inspector
-      );
     }
   }, [buyer, lender, inspector, seller]);
 
